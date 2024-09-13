@@ -94,7 +94,7 @@ const ViewProfile = () => {
             />
           ) : (
             <div className="space-y-2">
-              <p><strong>Username:</strong> {profile.username}</p>
+              <p><strong>Username:</strong> {profile.user?.username}</p>
               <p><strong>Email:</strong> {profile.email}</p>
               <p><strong>Gender:</strong> {profile.gender}</p>
               <p><strong>Address:</strong> {profile.address}</p>

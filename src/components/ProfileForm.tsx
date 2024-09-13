@@ -38,13 +38,13 @@ const ProfileForm = ({ defaultValues, isEdit, userId, onCancel }: ProfileFormPro
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label htmlFor="username" className="block text-sm font-medium">Username</label>
+        {/* <label htmlFor="username" className="block text-sm font-medium">Username</label>
         <input
           {...register('username')}
           id="username"
           className="border border-gray-300 p-2 w-full"
           required
-        />
+        /> */}
       </div>
       <div>
         <label htmlFor="email" className="block text-sm font-medium">Email</label>
