@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router'; // Add this import
 import { AppDispatch } from '../store/store';
 import { updateProfile, createProfile } from '../store/profileSlice';
 
@@ -22,6 +23,7 @@ interface ProfileFormProps {
 const ProfileForm = ({ defaultValues, isEdit, userId, onCancel }: ProfileFormProps) => {
   const { register, handleSubmit } = useForm({ defaultValues });
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter(); // Add this line
 
   const onSubmit = async (data: any) => {
     if (isEdit) {
@@ -30,6 +32,8 @@ const ProfileForm = ({ defaultValues, isEdit, userId, onCancel }: ProfileFormPro
       await dispatch(createProfile({ ...data, userId }));
     }
     if (onCancel) onCancel();
+    // Add this line to redirect after profile creation or update
+    router.push(`/profiles/${userId}/view`);
   };
 
   return (

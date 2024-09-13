@@ -27,8 +27,11 @@ const ViewProfile = () => {
     return (
       <div className="p-8">
         <h1 className="text-2xl font-bold mb-4">User Profile</h1>
-        <div>No profile found for this user.</div>
-        <Link href={`/profiles/${userId}/create`} className="text-blue-500">
+        <div className="mb-4">No profile found for this user.</div>
+        <Link 
+          href={`/profiles/${userId}/create`} 
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out inline-block"
+        >
           Create Profile
         </Link>
       </div>
