@@ -12,6 +12,7 @@ export const fetchProfiles = createAsyncThunk('profile/fetchProfiles', async () 
 export const createProfile = createAsyncThunk(
   'profile/createProfile',
   async (profileData: any) => {
+    console.log('Creating profile with data:', profileData);
     const response = await axios.post(API_URL, profileData);
     return response.data;
   }

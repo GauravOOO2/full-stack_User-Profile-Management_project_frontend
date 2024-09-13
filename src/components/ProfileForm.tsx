@@ -7,6 +7,7 @@ import { createProfile, updateProfile } from '../store/profileSlice';
 interface ProfileFormProps {
   defaultValues?: {
     userId?: number;
+    username: string;
     email: string;
     gender: string;
     address: string;
@@ -31,12 +32,20 @@ const ProfileForm = ({ defaultValues, isEdit, userId, onCancel }: ProfileFormPro
     } else {
       await dispatch(createProfile({ ...data, userId }));
     }
-    // Redirect to the view profile page
     router.push(`/profiles/${userId}/view`);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <label htmlFor="username" className="block text-sm font-medium">Username</label>
+        <input
+          {...register('username')}
+          id="username"
+          className="border border-gray-300 p-2 w-full"
+          required
+        />
+      </div>
       <div>
         <label htmlFor="email" className="block text-sm font-medium">Email</label>
         <input
