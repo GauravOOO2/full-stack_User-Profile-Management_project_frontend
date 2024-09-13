@@ -1,13 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers, deleteUser } from '../../store/userSlice';
 import { AppDispatch, RootState } from '../../store/store';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import ConfirmationPopup from '../../components/ConfirmationPopup';
 
 const UserList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { users, status, error } = useSelector((state: RootState) => state.user);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<number | null>(null);
 
   useEffect(() => {
     if (status === 'idle') {
@@ -15,15 +18,27 @@ const UserList = () => {
     }
   }, [status, dispatch]);
 
-  const handleDelete = async (id: number) => {
-    if (confirm('Are you sure you want to delete?')) {
+  const handleDeleteClick = (id: number) => {
+    setUserToDelete(id);
+    setIsDeletePopupOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (userToDelete) {
       try {
-        await dispatch(deleteUser(id)).unwrap();
+        await dispatch(deleteUser(userToDelete)).unwrap();
         toast.success('User deleted successfully');
       } catch (error) {
         toast.error(error || 'Failed to delete user');
       }
     }
+    setIsDeletePopupOpen(false);
+    setUserToDelete(null);
+  };
+
+  const handleDeleteCancel = () => {
+    setIsDeletePopupOpen(false);
+    setUserToDelete(null);
   };
 
   if (status === 'loading') {
@@ -60,7 +75,7 @@ const UserList = () => {
                 <Link href={`/users/${user.id}/edit`} className="text-blue-500 mr-4 hover:text-blue-700">
                   <span className="text-xl">✏️</span>
                 </Link>
-                <button onClick={() => handleDelete(user.id)} className="text-red-500 mr-4 hover:text-red-700">
+                <button onClick={() => handleDeleteClick(user.id)} className="text-red-500 mr-4 hover:text-red-700">
                   <span className="inline-block w-6 h-6 bg-red-500 text-white rounded-full text-center leading-5">&times;</span>
                 </button>
                 <Link href={`/profiles/${user.id}/view`} className="text-green-500 hover:text-green-700 font-medium">
@@ -71,6 +86,13 @@ const UserList = () => {
           ))}
         </tbody>
       </table>
+
+      <ConfirmationPopup
+        isOpen={isDeletePopupOpen}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        message="Are you sure you want to delete this user?"
+      />
     </div>
   );
 };

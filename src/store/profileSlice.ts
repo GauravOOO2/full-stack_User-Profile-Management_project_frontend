@@ -12,10 +12,7 @@ export const fetchProfiles = createAsyncThunk('profile/fetchProfiles', async () 
 export const createProfile = createAsyncThunk(
   'profile/createProfile',
   async (profileData: any) => {
-    const response = await axios.post(API_URL, {
-      ...profileData,
-      id: profileData.userId // Ensure the profile ID is the same as the user ID
-    });
+    const response = await axios.post(API_URL, profileData);
     return response.data;
   }
 );

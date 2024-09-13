@@ -1,11 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router'; // Add this import
+import { useRouter } from 'next/router';
 import { AppDispatch } from '../store/store';
-import { updateProfile, createProfile } from '../store/profileSlice';
+import { createProfile, updateProfile } from '../store/profileSlice';
 
 interface ProfileFormProps {
-  defaultValues: {
+  defaultValues?: {
     userId?: number;
     email: string;
     gender: string;
@@ -17,13 +17,13 @@ interface ProfileFormProps {
   };
   isEdit: boolean;
   userId: number;
-  onCancel?: () => void;  // Make this optional
+  onCancel?: () => void;
 }
 
 const ProfileForm = ({ defaultValues, isEdit, userId, onCancel }: ProfileFormProps) => {
   const { register, handleSubmit } = useForm({ defaultValues });
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter(); // Add this line
+  const router = useRouter();
 
   const onSubmit = async (data: any) => {
     if (isEdit) {
@@ -31,8 +31,7 @@ const ProfileForm = ({ defaultValues, isEdit, userId, onCancel }: ProfileFormPro
     } else {
       await dispatch(createProfile({ ...data, userId }));
     }
-    if (onCancel) onCancel();
-    // Add this line to redirect after profile creation or update
+    // Redirect to the view profile page
     router.push(`/profiles/${userId}/view`);
   };
 
@@ -103,7 +102,7 @@ const ProfileForm = ({ defaultValues, isEdit, userId, onCancel }: ProfileFormPro
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
           {isEdit ? 'Update Profile' : 'Create Profile'}
         </button>
-        {onCancel && (  // Only render Cancel button if onCancel is provided
+        {onCancel && (
           <button type="button" onClick={onCancel} className="bg-gray-300 text-black px-4 py-2 rounded">
             Cancel
           </button>

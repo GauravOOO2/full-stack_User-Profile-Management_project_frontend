@@ -25,6 +25,10 @@ const UserForm = ({ defaultValues = { username: '', phone: '' }, isEdit = false,
     router.push('/users');
   };
 
+  const handleCancel = () => {
+    router.push('/users');
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
@@ -45,9 +49,16 @@ const UserForm = ({ defaultValues = { username: '', phone: '' }, isEdit = false,
           required
         />
       </div>
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-        {isEdit ? 'Update' : 'Create'}
-      </button>
+      <div className="flex space-x-4">
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+          {isEdit ? 'Update' : 'Create'}
+        </button>
+        {isEdit && (
+          <button type="button" onClick={handleCancel} className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">
+            Cancel
+          </button>
+        )}
+      </div>
     </form>
   );
 };
