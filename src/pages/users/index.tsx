@@ -42,50 +42,52 @@ const UserList = () => {
   };
 
   if (status === 'loading') {
-    return <div className="text-xl">Loading...</div>;
+    return <div className="text-xl text-center mt-8">Loading...</div>;
   }
 
   if (status === 'failed') {
-    return <div className="text-xl text-red-500">Error: {error}</div>;
+    return <div className="text-xl text-red-500 text-center mt-8">Error: {error}</div>;
   }
 
   return (
-    <div className="p-6">
-      <div className="flex justify-start mb-8">
-        <h1 className="text-3xl font-bold">Users</h1>
-        <Link href="/users/create" className="bg-blue-500 text-white ml-4 px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-300">
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800">Users</h1>
+        <Link href="/users/create" className="bg-blue-500 text-white px-6 py-2 rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-300">
           Create User
         </Link>
       </div>
 
-      <table className="w-full text-lg">
-        <thead>
-          <tr className="border-b-2 border-gray-200">
-            <th className="text-left py-4">Username</th>
-            <th className="text-left py-4">Phone</th>
-            <th className="text-right py-4">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id} className="border-b border-gray-100">
-              <td className="py-4">{user.username}</td>
-              <td className="py-4">{user.phone}</td>
-              <td className="py-4 text-right">
-                <Link href={`/users/${user.id}/edit`} className="text-blue-500 mr-4 hover:text-blue-700">
-                  <span className="text-xl">✏️</span>
-                </Link>
-                <button onClick={() => handleDeleteClick(user.id)} className="text-red-500 mr-4 hover:text-red-700">
-                  <span className="inline-block w-6 h-6 bg-red-500 text-white rounded-full text-center leading-5">&times;</span>
-                </button>
-                <Link href={`/profiles/${user.id}/view`} className="text-green-500 hover:text-green-700 font-medium">
-                  View Profile
-                </Link>
-              </td>
+      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+        <table className="w-full text-lg">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="text-left py-3 px-4 font-semibold text-gray-600">Username</th>
+              <th className="text-left py-3 px-4 font-semibold text-gray-600">Phone</th>
+              <th className="text-right py-3 px-4 font-semibold text-gray-600">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.id} className="border-b border-gray-200 hover:bg-gray-50">
+                <td className="py-3 px-4">{user.username}</td>
+                <td className="py-3 px-4">{user.phone}</td>
+                <td className="py-3 px-4 text-right">
+                  <Link href={`/users/${user.id}/edit`} className="text-blue-500 mr-4 hover:text-blue-700">
+                    <span className="text-xl">✏️</span>
+                  </Link>
+                  <button onClick={() => handleDeleteClick(user.id)} className="text-red-500 mr-4 hover:text-red-700">
+                    <span className="">❌</span>
+                  </button>
+                  <Link href={`/profiles/${user.id}/view`} className="text-green-500 hover:text-green-700 font-medium">
+                    View Profile
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <ConfirmationPopup
         isOpen={isDeletePopupOpen}

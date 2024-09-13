@@ -19,6 +19,10 @@ const EditUser = () => {
     }
   }, [dispatch, user]);
 
+  const handleCancel = () => {
+    router.push('/users');
+  };
+
   if (!user) {
     return <div>Loading...</div>;
   }
@@ -30,6 +34,7 @@ const EditUser = () => {
         defaultValues={{ username: user.username, phone: user.phone }}
         isEdit={true}
         userId={Number(id)}
+        onCancel={handleCancel}
       />
     </div>
   );

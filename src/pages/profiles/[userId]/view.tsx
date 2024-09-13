@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProfileByUserId, deleteProfile } from '../../../store/profileSlice';
+import { fetchProfileByUserId, deleteProfile, updateProfile } from '../../../store/profileSlice';
 import { AppDispatch, RootState } from '../../../store/store';
 import ProfileForm from '../../../components/ProfileForm';
 import Link from 'next/link';
@@ -60,6 +60,16 @@ const ViewProfile = () => {
     setIsEditing(false);
   };
 
+  const handleSubmit = async (data: any) => {
+    try {
+      await dispatch(updateProfile({ userId: Number(userId), profileData: data })).unwrap();
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Failed to update profile:', error);
+      // Handle error (e.g., show an error message to the user)
+    }
+  };
+
   return (
     <div className="p-8">
       <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
@@ -90,7 +100,8 @@ const ViewProfile = () => {
               defaultValues={profile} 
               isEdit={true} 
               userId={Number(userId)} 
-              onCancel={handleCancel} 
+              onCancel={handleCancel}
+              onSubmit={handleSubmit}
             />
           ) : (
             <div className="space-y-2">

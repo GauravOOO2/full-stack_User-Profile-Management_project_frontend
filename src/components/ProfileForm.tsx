@@ -17,24 +17,29 @@ interface ProfileFormProps {
   isEdit: boolean;
   userId: number;
   onCancel?: () => void;
+  onSubmit?: (data: any) => Promise<void>;
 }
 
-const ProfileForm = ({ defaultValues, isEdit, userId, onCancel }: ProfileFormProps) => {
+const ProfileForm = ({ defaultValues, isEdit, userId, onCancel, onSubmit }: ProfileFormProps) => {
   const { register, handleSubmit } = useForm({ defaultValues });
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
-  const onSubmit = async (data: any) => {
-    if (isEdit) {
-      await dispatch(updateProfile({ userId, profileData: data }));
+  const onSubmitWrapper = async (data: any) => {
+    if (onSubmit) {
+      await onSubmit(data);
     } else {
-      await dispatch(createProfile({ ...data, userId }));
+      if (isEdit) {
+        await dispatch(updateProfile({ userId, profileData: data }));
+      } else {
+        await dispatch(createProfile({ ...data, userId }));
+      }
+      router.push(`/profiles/${userId}/view`);
     }
-    router.push(`/profiles/${userId}/view`);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmitWrapper)} className="space-y-4">
       <div>
         <label htmlFor="email" className="block text-sm font-medium">Email</label>
         <input

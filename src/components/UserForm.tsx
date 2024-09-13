@@ -8,9 +8,10 @@ interface UserFormProps {
   defaultValues?: { username: string; phone: string };
   isEdit?: boolean;
   userId?: number;
+  onCancel?: () => void;
 }
 
-const UserForm = ({ defaultValues = { username: '', phone: '' }, isEdit = false, userId }: UserFormProps) => {
+const UserForm = ({ defaultValues = { username: '', phone: '' }, isEdit = false, userId, onCancel }: UserFormProps) => {
   const { register, handleSubmit, reset } = useForm({ defaultValues });
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
@@ -25,10 +26,6 @@ const UserForm = ({ defaultValues = { username: '', phone: '' }, isEdit = false,
     router.push('/users');
   };
 
-  const handleCancel = () => {
-    router.push('/users');
-  };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
@@ -36,7 +33,7 @@ const UserForm = ({ defaultValues = { username: '', phone: '' }, isEdit = false,
         <input
           {...register('username')}
           id="username"
-          className="border border-gray-300 p-2 w-full"
+          className="border border-gray-300 p-2 w-full rounded"
           required
         />
       </div>
@@ -45,16 +42,16 @@ const UserForm = ({ defaultValues = { username: '', phone: '' }, isEdit = false,
         <input
           {...register('phone')}
           id="phone"
-          className="border border-gray-300 p-2 w-full"
+          className="border border-gray-300 p-2 w-full rounded"
           required
         />
       </div>
       <div className="flex space-x-4">
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
           {isEdit ? 'Update' : 'Create'}
         </button>
-        {isEdit && (
-          <button type="button" onClick={handleCancel} className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">
+        {onCancel && (
+          <button type="button" onClick={onCancel} className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition duration-300">
             Cancel
           </button>
         )}
