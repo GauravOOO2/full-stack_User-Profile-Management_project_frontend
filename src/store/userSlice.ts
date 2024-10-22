@@ -32,8 +32,14 @@ export const deleteUser = createAsyncThunk('user/deleteUser', async (id: number,
 });
 
 // Initial state
+export interface User {
+  id: number; // or string, depending on your API
+  username: string;
+  phone: string;
+}
+
 const initialState = {
-  users: [],
+  users: [] as User[], // Specify the type for users
   status: 'idle',
   error: null,
 };
