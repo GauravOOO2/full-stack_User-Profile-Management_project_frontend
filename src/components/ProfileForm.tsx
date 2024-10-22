@@ -4,28 +4,31 @@ import { useRouter } from 'next/router';
 import { AppDispatch } from '../store/store';
 import { createProfile, updateProfile } from '../store/profileSlice';
 
+// Define a Profile type
+interface Profile {
+  email: string;
+  gender: string;
+  address: string;
+  pincode: string;
+  city: string;
+  state: string;
+  country: string;
+}
+
 interface ProfileFormProps {
-  defaultValues?: {
-    email: string;
-    gender: string;
-    address: string;
-    pincode: string;
-    city: string;
-    state: string;
-    country: string;
-  };
+  defaultValues?: Profile;
   isEdit: boolean;
   userId: number;
   onCancel?: () => void;
-  onSubmit?: (data: any) => Promise<void>;
+  onSubmit?: (data: Profile) => Promise<void>;
 }
 
 const ProfileForm = ({ defaultValues, isEdit, userId, onCancel, onSubmit }: ProfileFormProps) => {
-  const { register, handleSubmit } = useForm({ defaultValues });
+  const { register, handleSubmit } = useForm<Profile>({ defaultValues });
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
-  const onSubmitWrapper = async (data: any) => {
+  const onSubmitWrapper = async (data: Profile) => {
     if (onSubmit) {
       await onSubmit(data);
     } else {

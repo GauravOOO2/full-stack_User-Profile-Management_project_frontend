@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'https://full-stack-user-profile-management.onrender.com/api/profiles';
+const API_URL = 'http://localhost:4000/api/profiles';
 
 // Thunks for asynchronous API calls
 export const fetchProfiles = createAsyncThunk('profile/fetchProfiles', async () => {
@@ -11,8 +11,7 @@ export const fetchProfiles = createAsyncThunk('profile/fetchProfiles', async () 
 
 export const createProfile = createAsyncThunk(
   'profile/createProfile',
-  async (profileData: any) => {
-    console.log('Creating profile with data:', profileData);
+  async (profileData: Profile) => {
     const response = await axios.post(API_URL, profileData);
     return response.data;
   }
@@ -20,7 +19,7 @@ export const createProfile = createAsyncThunk(
 
 export const updateProfile = createAsyncThunk(
   'profile/updateProfile',
-  async ({ userId, profileData }: { userId: number; profileData: any }) => {
+  async ({ userId, profileData }: { userId: number; profileData: Profile }) => {
     const response = await axios.patch(`${API_URL}/${userId}`, profileData);
     return response.data;
   }

@@ -60,7 +60,7 @@ const ViewProfile = () => {
     setIsEditing(false);
   };
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (data: Profile) => {
     try {
       await dispatch(updateProfile({ userId: Number(userId), profileData: data })).unwrap();
       setIsEditing(false);

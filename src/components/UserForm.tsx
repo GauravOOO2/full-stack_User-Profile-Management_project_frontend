@@ -4,6 +4,11 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store/store';
 import { createUser, updateUser } from '../store/userSlice';
 
+interface User {
+  username: string;
+  phone: string;
+}
+
 interface UserFormProps {
   defaultValues?: { username: string; phone: string };
   isEdit?: boolean;
@@ -12,11 +17,11 @@ interface UserFormProps {
 }
 
 const UserForm = ({ defaultValues = { username: '', phone: '' }, isEdit = false, userId, onCancel }: UserFormProps) => {
-  const { register, handleSubmit, reset } = useForm({ defaultValues });
+  const { register, handleSubmit, reset } = useForm<User>({ defaultValues });
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
-  const onSubmit = async (data: { username: string; phone: string }) => {
+  const onSubmit = async (data: User) => {
     if (isEdit && userId) {
       await dispatch(updateUser({ id: userId, userData: data }));
     } else {
