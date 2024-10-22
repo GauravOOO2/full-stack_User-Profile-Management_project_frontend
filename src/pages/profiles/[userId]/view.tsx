@@ -106,14 +106,30 @@ const ViewProfile = () => {
             />
           ) : (
             <div className="space-y-2">
-              <p><strong>Username:</strong> {profile.user?.username}</p>
-              <p><strong>Email:</strong> {profile.email}</p>
-              <p><strong>Gender:</strong> {profile.gender}</p>
-              <p><strong>Address:</strong> {profile.address}</p>
-              <p><strong>Pincode:</strong> {profile.pincode}</p>
-              <p><strong>City:</strong> {profile.city}</p>
-              <p><strong>State:</strong> {profile.state}</p>
-              <p><strong>Country:</strong> {profile.country}</p>
+              <p>
+                <strong>Username:</strong> {profile.username} {/* Ensure username is accessed correctly */}
+              </p>
+              <p>
+                <strong>Email:</strong> {profile.email}
+              </p>
+              <p>
+                <strong>Gender:</strong> {profile.gender}
+              </p>
+              <p>
+                <strong>Address:</strong> {profile.address}
+              </p>
+              <p>
+                <strong>Pincode:</strong> {profile.pincode}
+              </p>
+              <p>
+                <strong>City:</strong> {profile.city}
+              </p>
+              <p>
+                <strong>State:</strong> {profile.state}
+              </p>
+              <p>
+                <strong>Country:</strong> {profile.country}
+              </p>
             </div>
           )}
         </div>

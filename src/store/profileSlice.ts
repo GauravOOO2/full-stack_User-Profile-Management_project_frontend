@@ -10,6 +10,7 @@ export interface Profile {
   city: string;
   state: string;
   country: string;
+  username?: string; // Add this if you want to access username
 }
 
 const API_URL = 'http://localhost:4000/api/profiles';
