@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:4000/api/profiles';
+const API_URL = 'https://full-stack-user-profile-management.onrender.com/api/profiles';
 
 // Thunks for asynchronous API calls
 export const fetchProfiles = createAsyncThunk('profile/fetchProfiles', async () => {
