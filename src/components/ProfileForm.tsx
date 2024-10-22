@@ -26,6 +26,7 @@ interface ProfileFormProps {
 
 const ProfileForm: React.FC<ProfileFormProps> = ({ defaultValues, isEdit, userId, onCancel }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter(); // Use the router if needed
   const { register, handleSubmit } = useForm<Profile>({ defaultValues });
 
   const onSubmit = async (data: Profile) => {
@@ -35,6 +36,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ defaultValues, isEdit, userId
       } else {
         await dispatch(createProfile({ ...data, userId })); // Ensure userId is included
       }
+      // Optionally navigate after successful submission
+      router.push(`/profiles/${userId}/view`); // Navigate to the profile view page
     } catch (error) {
       console.error('Failed to save profile:', error);
       // Handle error (e.g., show an error message to the user)
