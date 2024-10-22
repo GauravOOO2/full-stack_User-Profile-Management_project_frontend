@@ -11,6 +11,7 @@ const EditProfile = () => {
   const router = useRouter();
   const { userId } = router.query;
 
+  // Ensure userId is treated as a string or undefined
   const profile = profiles.find((profile) => profile.userId === Number(userId));
 
   useEffect(() => {
