@@ -1,6 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+export interface Profile {
+  userId: number; // Ensure userId is defined here
+  email: string;
+  gender: string;
+  address: string;
+  pincode: string;
+  city: string;
+  state: string;
+  country: string;
+}
+
 const API_URL = 'http://localhost:4000/api/profiles';
 
 // Thunks for asynchronous API calls
@@ -47,7 +58,7 @@ export const fetchProfileByUserId = createAsyncThunk('profile/fetchProfileByUser
 
 // Initial state
 const initialState = {
-  profiles: [],
+  profiles: [] as Profile[], // Specify the type for profiles
   status: 'idle',
   error: null,
 };
