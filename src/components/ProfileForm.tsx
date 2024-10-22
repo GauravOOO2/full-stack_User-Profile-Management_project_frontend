@@ -6,6 +6,7 @@ import { createProfile, updateProfile } from '../store/profileSlice';
 
 // Define a Profile type
 interface Profile {
+  userId: number; // Ensure userId is included here
   email: string;
   gender: string;
   address: string;
@@ -18,31 +19,30 @@ interface Profile {
 interface ProfileFormProps {
   defaultValues?: Profile;
   isEdit: boolean;
-  userId: number;
+  userId: number; // Ensure userId is passed as a prop
   onCancel?: () => void;
   onSubmit?: (data: Profile) => Promise<void>;
 }
 
-const ProfileForm = ({ defaultValues, isEdit, userId, onCancel, onSubmit }: ProfileFormProps) => {
-  const { register, handleSubmit } = useForm<Profile>({ defaultValues });
+const ProfileForm: React.FC<ProfileFormProps> = ({ defaultValues, isEdit, userId, onCancel }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
+  const { register, handleSubmit } = useForm<Profile>({ defaultValues });
 
-  const onSubmitWrapper = async (data: Profile) => {
-    if (onSubmit) {
-      await onSubmit(data);
-    } else {
+  const onSubmit = async (data: Profile) => {
+    try {
       if (isEdit) {
-        await dispatch(updateProfile({ userId, profileData: data }));
+        await dispatch(updateProfile({ userId, profileData: data })); // Ensure userId is included
       } else {
-        await dispatch(createProfile({ ...data, userId }));
+        await dispatch(createProfile({ ...data, userId })); // Ensure userId is included
       }
-      router.push(`/profiles/${userId}/view`);
+    } catch (error) {
+      console.error('Failed to save profile:', error);
+      // Handle error (e.g., show an error message to the user)
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmitWrapper)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label htmlFor="email" className="block text-sm font-medium">Email</label>
         <input
