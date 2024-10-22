@@ -1,6 +1,11 @@
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+  children: ReactNode; // Specify the type for children
+}
+
+const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-gray-100">
       <nav className="bg-white shadow-md">
