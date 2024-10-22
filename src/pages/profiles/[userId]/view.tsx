@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from '../../../store/store';
 import ProfileForm from '../../../components/ProfileForm';
 import Link from 'next/link';
 import ConfirmationPopup from '../../../components/ConfirmationPopup';
+import { Profile } from '../../../store/profileSlice'; // Import the Profile type
 
 const ViewProfile = () => {
   const dispatch = useDispatch<AppDispatch>();

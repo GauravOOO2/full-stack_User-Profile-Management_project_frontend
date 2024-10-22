@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export interface Profile {
-  userId: number; // Ensure userId is defined here
+  userId: number; // Ensure userId is included here
   email: string;
   gender: string;
   address: string;
